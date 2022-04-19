@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <input type="number" name="vec3_x1" class="vec1">
+    <input type="number" name="vec3_y1" class="vec1">
+    <input type="number" name="vec3_z1" class="vec1"><br>
+    <input type="number" name="vec3_x2" class="vec2">
+    <input type="number" name="vec3_y2" class="vec2">
+    <input type="number" name="vec3_z2" class="vec2"><br>
+    <input type="number" name="vec3_x3" class="vec3">
+    <input type="number" name="vec3_y3" class="vec3">
+    <input type="number" name="vec3_z3" class="vec3"><br>
+    <input type="button" value="calc" id="calc">
+
+    <script src="vec3.js"></script>
+    <script>
+
+        var vi = new Vec3( 1, 2, 3 );
+        var vj = new Vec3( 2, 3, 4 );
+        console.log(dot( vi, vj ));
+        function calcurateArea( v1, v2, v3 ) {
+            var v_a = v2.sub( v1 );
+            var v_b = v3.sub( v1 );
+            var length_a = v_a.length();
+            var length_b = v_b.length();
+            console.log( "length a:  " + length_a );
+            console.log( "length b:  " + length_b );
+            var dot_ab = dot( v_a, v_b );
+            console.log( "dot:  " + dot_ab );
+            var S = Math.sqrt(length_a * length_a * length_b * length_b - dot_ab * dot_ab);
+            return S;
+        }
+
+        function dot( v1, v2 ) {
+            var prod_x = v1.x * v2.x;
+            var prod_y = v1.y * v2.y;
+            var prod_z = v1.z * v2.z;
+            return prod_x + prod_y + prod_z;
+        }
+
+        document.getElementById( "calc" ).addEventListener( "click", function(e) {
+            var vec1 = document.getElementsByClassName( "vec1" );
+            var vec2 = document.getElementsByClassName( "vec2" );
+            var vec3 = document.getElementsByClassName( "vec3" );
+            var v1 = new Vec3( vec1[0].value, vec1[1].value, vec1[2].value );
+            var v2 = new Vec3( vec2[0].value, vec2[1].value, vec2[2].value );
+            var v3 = new Vec3( vec3[0].value, vec3[1].value, vec3[2].value );
+            console.log(v1);
+            document.write("Area of triangle: " + calcurateArea( v1, v2, v3 ));
+        })
+
+    </script>
+</body>
+</html>

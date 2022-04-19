@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <input type="number" name="vec3_x" id="vec3_x">
+    <input type="number" name="vec3_y" id="vec3_y">
+    <input type="number" name="vec3_z" id="vec3_z">
+    <input type="button" value="Calc" id ="calc">
+
+
+
+    <script src="vec3.js"></script>
+    <script>
+        function display(x, y, z) {
+            
+            var v = new Vec3(x, y, z);
+            console.log(v.x + v.y + v.z);
+            console.log(v.y);
+            console.log(v.z);
+            console.log(v.sum());
+            document.write("min: " + v.min() + "<br>");
+            document.write("mid: " + v.mid() + "<br>");
+            document.write("max: " + v.max());
+        }
+
+        document.getElementById("calc").addEventListener("click", function (e) {
+            var x = document.getElementById("vec3_x").value;
+            console.log(x);
+            var y = document.getElementById("vec3_y").value;
+            var z = document.getElementById("vec3_z").value;
+            display(x, y, z);
+        });
+    </script>
+</body>
+</html>
