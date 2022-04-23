@@ -10,10 +10,8 @@
 	 var svg = d3.select("body").append("svg")
                  .attr("width", 1000).attr("height", 500);
      d3.csv("https://raystar247.github.io/InfoVis2022/W04/w04_task2.csv", draw);
-     // var data = [{pref: "Tokyo",  density: "63"}, {pref: "Osaka",  density: "46"}, {pref: "Kanagawa",  density: "38"}];
-     // draw(data);
      function draw(data) {
-         console.log(data[0].density);
+         console.log(data);
          svg.selectAll("rect").data(data).enter().append("rect")
             .attr("x", padding + 200)
             .attr("y", function(d,i){ return padding + i * ( height + padding ); })
@@ -22,7 +20,7 @@
          svg.selectAll("text").data(data).enter().append("text")
             .attr("x", padding)
             .attr("y", function(d,i){ return padding + i * ( height + padding ) + 17; })
-            .attr("width", 50)
+            .attr("width", 30)
             .attr("height", height)
             .text(function(d){ return d.pref; });
      }
