@@ -16,13 +16,24 @@
             .attr("x", padding + 200)
             .attr("y", function(d,i){ return padding + i * ( height + padding ); })
             .attr("height", height)
-            .attr("width", function(d){ return d.density / 10; });
+            .attr("width", function(d){ return d.density / 10; })
+            .style("fill", locality_to_color(d.locality));
          svg.selectAll("text").data(data).enter().append("text")
             .attr("x", padding)
             .attr("y", function(d,i){ return padding + i * ( height + padding ) + 17; })
             .attr("width", 30)
             .attr("height", height)
             .text(function(d){ return d.pref; });
+     }
+
+     function locality_to_color(locality) {
+         if (locality == "kanto") {
+             return "blue";
+         } else if (locality == "kinki") {
+             return "green";
+         } else {
+             return "black";
+         }
      }
 	 
 	</script>
