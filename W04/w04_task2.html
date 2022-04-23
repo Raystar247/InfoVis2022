@@ -18,11 +18,11 @@
             .attr("x", padding + 200)
             .attr("y", function(d,i){ return padding + i * ( height + padding ); })
             .attr("height", height)
-            .attr("width", function(d){ return d.density; });
+            .attr("width", function(d){ return d.density / 10; });
          svg.selectAll("text").data(data).enter().append("text")
             .attr("x", padding)
             .attr("y", function(d,i){ return padding + i * ( height + padding ) + 17; })
-            .attr("width", 100)
+            .attr("width", 50)
             .attr("height", height)
             .text(function(d){ return d.pref; });
      }
