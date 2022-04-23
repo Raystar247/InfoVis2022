@@ -8,6 +8,7 @@
 	 var svg = d3.select("body").append("svg");
 	 d3.csv("https://raystar247.github.io/InfoVis2022/W04/w04_task1.csv", draw );
 	 function draw(data){
+		 console.log(data);
 	     svg.selectAll("circle")
 			.data(data)
 	        .enter()
