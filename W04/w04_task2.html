@@ -17,7 +17,7 @@
             .attr("y", function(d,i){ return padding + i * ( height + padding ); })
             .attr("height", height)
             .attr("width", function(d){ return d.density / 10; })
-            .style("fill", locality_to_color(d.locality));
+            .style("fill", function(d){ return locality_to_color(d.locality);});
          svg.selectAll("text").data(data).enter().append("text")
             .attr("x", padding)
             .attr("y", function(d,i){ return padding + i * ( height + padding ) + 17; })
