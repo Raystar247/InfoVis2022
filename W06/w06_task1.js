@@ -4,11 +4,12 @@ d3.csv("https://raystar247.github.io/InfoVis2022/W06/data.csv")
 
         var config = {
             parent: '#drawing_region',
-            width: 420,
-            height: 420,
+            width: 512,
+            height: 512,
             margin: {top:30, right:30, bottom:30, left:30},
-            xlabel: "平均高度",
-            ylabel: "緯度"
+            xlabel: "旅券取得者数",
+            ylabel: "最低賃金",
+            font_size: 10
         };
 
         const scatter_plot = new ScatterPlot( config, data );
@@ -27,7 +28,8 @@ class ScatterPlot {
             height: config.height || 256,
             margin: config.margin || {top:30, right:30, bottom:30, left:30},
             xlabel: config.xlabel || "sample x",
-            ylabel: config.ylabel || "sample y"
+            ylabel: config.ylabel || "sample y",
+            font_size: config.font_size || 12
         }
         this.data = data;
         this.init();
@@ -60,10 +62,10 @@ class ScatterPlot {
             
 
         self.xaxis = d3.axisBottom( self.xscale )
-            .ticks(6);
+            .ticks(10);
 
         self.yaxis = d3.axisLeft( self.yscale )
-            .ticks(6);
+            .ticks(10);
 
         self.xaxis_group = self.chart.append('g')
             .attr('transform', `translate(${self.config.margin.left}, ${self.inner_height + self.config.margin.top + self.config.margin.bottom})`);
