@@ -7,6 +7,7 @@ d3.csv("https://raystar247.github.io/InfoVis2022/W06/data.csv")
             width: 400,
             height: 400,
             margin: {top:30, right:30, bottom:30, left:30},
+            title: "旅券取得者数と最低賃金の相関",
             xlabel: "旅券取得者数",
             ylabel: "最低賃金",
             font_size: 11.5
@@ -27,6 +28,7 @@ class ScatterPlot {
             width: config.width || 256,
             height: config.height || 256,
             margin: config.margin || {top:30, right:30, bottom:30, left:30},
+            title: config.title || "no title",
             xlabel: config.xlabel || "sample x",
             ylabel: config.ylabel || "sample y",
             font_size: config.font_size || 12
@@ -44,6 +46,13 @@ class ScatterPlot {
 
         self.chart = self.svg.append('g')
             .attr('transform', `translate(${self.config.margin.left + 30}, ${self.config.margin.top})`);
+
+        self.title = self.svg.append('text')
+            .attr('transform', `translate(${self.config.width / 2}, ${self.config.margin.top / 2})`)
+            .attr('fill', "black")
+            .attr('text-anchor', "middle")
+            .text(self.config.title);
+
 
         self.inner = self.chart.append('g')
             .attr('transform', `translate(${self.config.margin.left}, ${self.config.margin.top})`)
