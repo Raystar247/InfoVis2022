@@ -29,7 +29,7 @@ class LineAreaChart {
         self.yscale = d3.scaleLinear()
             .range( [0, self.inner_height] );
         
-        self.xaxis = d3.axisBottom( self.xscale ).ticks( 10 );
+        self.xaxis = d3.axisBottom( self.xscale ).ticks( 4 );
         self.yaxis = d3.axisLeft( self.yscale ).ticks( 10 );
         self.xaxis_group = self.chart.append('g')
             .attr('transform', `translate(0,${self.inner_height})`);
@@ -39,7 +39,7 @@ class LineAreaChart {
     update() {
         let self = this;
 
-        const space = 10;
+        const space = 0.5;
         const xmin = d3.min( self.data, d => d.x );
         const xmax = d3.max( self.data, d => d.x );
         self.xscale.domain([xmin - space, xmax + space]);
@@ -56,19 +56,21 @@ class LineAreaChart {
             .x( d => self.xscale( d.x ) )
             .y( d => self.yscale( d.y ) );
 
-        const xlabel_space = 10;
+        const xlabel_space = 20;
         self.svg.append( 'text' )
             .attr("x", self.config.width / 2)
             .attr("y", self.config.height + self.config.margin.top - xlabel_space)
+            .attr('font-size', 11)
             .text( self.config.xlabel);
         
-        const ylabel_space = 50;
+        const ylabel_space = 40;
         self.svg.append( 'text' )
             .attr("transform", `rotate(-90)`)
             .attr("y", self.config.margin.left - ylabel_space)
             .attr("text-anchor", "middle")
             .attr("x", -self.config.height / 2)
             .attr("dy", "1em")
+            .attr('font-size', 11)
             .text( self.config.ylabel);
         
         self.chart.append( 'path' )
@@ -82,20 +84,13 @@ class LineAreaChart {
             .append("circle")
             .attr("cx", d => self.xscale( d.x ) )
             .attr("cy", d => self.yscale( d.y ) )
-            .attr("r", 2.5 );
+            .attr("r", 2 );
 
         self.xaxis_group.call( self.xaxis );
         self.yaxis_group.call( self.yaxis );
     }
 }
 
-var data = [
-    {x:0, y:100},
-    {x:40, y:5},
-    {x:120, y:80},
-    {x:150, y:30},
-    {x:200, y:50}
-];
 
 var config = {
     parent: '#drawing_region',
@@ -107,12 +102,14 @@ var config = {
 
 d3.csv("https://raystar247.github.io/InfoVis2022/W08/timed_data.csv")
     .then( data => {
+        data.forEach( d => { d.x = +d.x; d.y = +d.y; });
+        console.log( data );
         var config = {
             parent: '#drawing_region',
-            width: 320,
-            height: 320,
-            xlabel: "Xlabel",
-            ylabel: "Ylabel"
+            width: 400,
+            height: 400,
+            xlabel: "年度",
+            ylabel: "一般会計税収(兆円)"
         };
         const lineChart = new LineAreaChart( config, data );
         lineChart.update();
