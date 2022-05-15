@@ -92,14 +92,6 @@ class LineAreaChart {
 }
 
 
-var config = {
-    parent: '#drawing_region',
-    width: 320,
-    height: 320,
-    xlabel: "Xlabel",
-    ylabel: "Ylabel"
-}
-
 d3.csv("https://raystar247.github.io/InfoVis2022/W08/timed_data.csv")
     .then( data => {
         data.forEach( d => { d.x = +d.x; d.y = +d.y; });
