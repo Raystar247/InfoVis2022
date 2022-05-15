@@ -63,18 +63,15 @@ class PieChart {
     }
 }
 
-var data = [
-    {label:'Apple', value:100},
-    {label:'Banana', value:200},
-    {label:'Cookie', value:50},
-    {label:'Doughnut', value:120},
-    {label:'Egg', value:80}
-];
-
-var config = {
-    parent: '#drawing_region',
-    inner_radius: 0
-}
-
-const pieChart = new PieChart( config, data );
-pieChart.update();
+d3.csv("https://raystar247.github.io/InfoVis2022/W08/value_data.csv")
+    .then( data => {
+        var config = {
+            parent: '#drawing_region',
+            inner_radius: 0
+        };
+        const pieChart = new PieChart( config, data );
+        pieChart.update();
+    })
+    .catch( error => {
+        console.log( error );
+    });        

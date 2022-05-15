@@ -77,7 +77,7 @@ class BarChart {
 
 };
 
-d3.csv("https://raystar247.github.io/InfoVis2022/W08/barChart_data.csv")
+d3.csv("https://raystar247.github.io/InfoVis2022/W08/value_data.csv")
     .then( data => {
         data.forEach( d => { d.value = +d.value; });
         // console.log( data );
