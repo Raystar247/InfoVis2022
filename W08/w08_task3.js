@@ -33,7 +33,7 @@ class PieChart {
         var radius = Math.min( inner_width, inner_height ) / 2;
         self.pie = d3.pie().value( d => d.value );
         self.arc = d3.arc()
-            .innerRadius( 0 )
+            .innerRadius( self.config.inner_radius )
             .outerRadius( radius );
         self.text = d3.arc()
             .innerRadius( radius - 30 )
@@ -57,7 +57,7 @@ class PieChart {
             .attr('transform', d => `translate(${self.text.centroid(d)})`)
             .attr('fill', "black")
             .attr('dy', "0.35px")
-            .attr('font', "10px")
+            .attr('font-size', 12)
             .attr('text-anchor', "middle")
             .text( function(d){ return d.data.label; } );
     }
@@ -67,7 +67,7 @@ d3.csv("https://raystar247.github.io/InfoVis2022/W08/value_data.csv")
     .then( data => {
         var config = {
             parent: '#drawing_region',
-            inner_radius: 0
+            inner_radius: 50
         };
         const pieChart = new PieChart( config, data );
         pieChart.update();

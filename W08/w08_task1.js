@@ -5,8 +5,9 @@ class BarChart {
             parent: config.parent,
             width: config.width || 256,
             height: config.height || 128,
-            margin: config.margin || {top:10, right:10, bottom:10, left:10},
-            font_size: config.font_size || 12
+            margin: config.margin || {top:30, right:30, bottom:10, left:10},
+            font_size: config.font_size || 12,
+            title: config.title || 'title'
         };
         this.data = data;
         
@@ -23,7 +24,7 @@ class BarChart {
         self.chart = self.svg.append('g')
                     .attr('transform', `translate(${self.config.margin.left + 70}, ${self.config.margin.top})`);
     
-        const inner_width = self.config.width - self.config.margin.left - self.config.margin.right;
+        const inner_width = self.config.width - self.config.margin.left - self.config.margin.right - 10;
         const inner_height = self.config.height - self.config.margin.top - self.config.margin.bottom;
 
         // Initialize axis scales
@@ -32,7 +33,7 @@ class BarChart {
 
         self.yscale = d3.scaleBand()
             .range([0, inner_height])
-            .paddingInner(0.1);
+            .paddingInner(0.2);
 
         // Initialize axes
         self.xaxis = d3.axisBottom( self.xscale )
@@ -45,7 +46,6 @@ class BarChart {
         // Prepare the axes
         self.xaxis_group = self.chart.append('g')
             .attr('transform', `translate(0, ${inner_height})`)
-
 
         self.yaxis_group = self.chart.append('g')
     }
@@ -63,6 +63,11 @@ class BarChart {
 
     render() {
         let self = this;
+
+        self.svg.append('text')
+            .attr('transform', `translate(${self.config.margin.left + self.config.width / 3.5}, 20)`)
+            .attr('font-size', 15)
+            .text( self.config.title );
         self.chart.selectAll("rect").data(self.data).enter()
             .append("rect")
             .attr("x", 0)
@@ -85,8 +90,9 @@ d3.csv("https://raystar247.github.io/InfoVis2022/W08/value_data.csv")
             parent: '#drawing_region',
             width: 512,
             height: 256,
-            margin: {top:10, right:40, bottom:10, left:10},
-            font_size: 12
+            margin: {top:30, right:40, bottom:10, left:10},
+            font_size: 12,
+            title: "平成22年度の近畿地方の府県の歳入(100万円)"
         };
 
         const bar_chart = new BarChart( config, data );
