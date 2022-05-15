@@ -9,6 +9,7 @@ class BarChart {
             font_size: config.font_size || 12
         };
         this.data = data;
+        
         this.init();
     }
 
@@ -52,8 +53,8 @@ class BarChart {
     update() {
         let self = this;
 
-        self.xscale.domain([0, d3.max(data, d => d.value)]);
-        self.yscale.domain(data.map(d => d.label));
+        self.xscale.domain([0, d3.max(self.data, d => d.value)]);
+        self.yscale.domain(self.data.map(d => d.label));
 
 
 
@@ -76,26 +77,21 @@ class BarChart {
 
 };
 
-var data = [
-    {label:'Apple', value:100},
-    {label:'Banana', value:200},
-    {label:'Cookie', value:50},
-    {label:'Doughnut', value:120},
-    {label:'Egg', value:80}
-];
+d3.csv("https://raystar247.github.io/InfoVis2022/W08/barChart_data.csv")
+    .then( data => {
+        data.forEach( d => { d.value = +d.value; });
+        // console.log( data );
+        var config = {
+            parent: '#drawing_region',
+            width: 512,
+            height: 256,
+            margin: {top:10, right:40, bottom:10, left:10},
+            font_size: 12
+        };
 
-var config = {
-    parent: '#drawing_region',
-    width: 512,
-    height: 256,
-    margin: {top:10, right:40, bottom:10, left:10},
-    font_size: 10
-};
-
-
-console.log(data);
-console.log(config);
-const bar_chart = new BarChart( config, data );
-bar_chart.update();
-
-
+        const bar_chart = new BarChart( config, data );
+        bar_chart.update();
+    })
+    .catch( error => {
+        console.log( error );
+    });
