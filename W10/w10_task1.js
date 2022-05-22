@@ -27,10 +27,6 @@ d3.csv("https://raystar247.github.io/InfoVis2022/W08/value_data.csv")
             .on('click', d => {
                 bar_chart.ascend();
             })
-        d3.select("#original")
-            .on('click', d => {
-                bar_chart.original();
-        });
     })
     .catch( error => {
         console.log( error );

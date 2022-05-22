@@ -20,7 +20,7 @@ d3.csv("https://raystar247.github.io/InfoVis2022/W06/data.csv")
             .on('mouseover', (e, d) => {
                 d3.select('#tooltip')
                   .style('opacity', 1)
-                  .html(`<div class="tooltip-label">Position</div>(${d.x}, ${d.y})`);
+                  .html(`<div class="tooltip-label">${d.pref}</div>(${d.x}, ${d.y})`);
             } );
         scatter_plot.circles
             .on('mousemove', (e) => {
