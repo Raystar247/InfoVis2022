@@ -1,24 +1,3 @@
-d3.csv("https://raystar247.github.io/InfoVis2022/W06/data.csv")
-    .then( data => {
-        data.forEach( d => { d.x = +d.x; d.y = +d.y; });
-
-        var config = {
-            parent: '#drawing_region',
-            width: 512,
-            height: 512,
-            margin: {top:30, right:30, bottom:30, left:30},
-            xlabel: "旅券取得者数",
-            ylabel: "最低賃金",
-            font_size: 10
-        };
-
-        const scatter_plot = new ScatterPlot( config, data );
-        scatter_plot.update();
-    })
-    .catch( error => {
-        console.log( error );
-    });
-
 class ScatterPlot {
 
     constructor( config, data ) {
@@ -27,10 +6,11 @@ class ScatterPlot {
             width: config.width || 256,
             height: config.height || 256,
             margin: config.margin || {top:30, right:30, bottom:30, left:30},
+            title: config.title || "no title",
             xlabel: config.xlabel || "sample x",
             ylabel: config.ylabel || "sample y",
             font_size: config.font_size || 12
-        };
+        }
         this.data = data;
         this.init();
     }
@@ -43,13 +23,36 @@ class ScatterPlot {
             .attr('height', self.config.height + 40);
 
         self.chart = self.svg.append('g')
-            .attr('transform', `translate(${self.config.margin.left + 10}, ${self.config.margin.top})`);
+            .attr('transform', `translate(${self.config.margin.left + 30}, ${self.config.margin.top})`);
+
+        self.title = self.svg.append('text')
+            .attr('transform', `translate(${self.config.width / 2}, ${self.config.margin.top / 2})`)
+            .attr('fill', "black")
+            .attr('text-anchor', "middle")
+            .text(self.config.title);
+
 
         self.inner = self.chart.append('g')
             .attr('transform', `translate(${self.config.margin.left}, ${self.config.margin.top})`)
             .attr('id', "inner");
 
+        self.ylabel = self.svg.append('text')
+            .attr('transform', `translate(25, ${self.config.height / 2}) rotate(-90)`)
+            .attr('text-anchor', "middle")
+            .attr('fill', "black")
+            .attr('font-size', `${self.config.font_size}`)
+            .attr('font-weigh', "650")
+            .style('display', "inline-block")
+            .style('width', "100px")
+            .text(self.config.ylabel);
 
+        self.xlabel = self.svg.append('text')
+            .attr('transform', `translate(${self.config.margin.top + self.config.width / 2 + 10}, ${self.config.height + 10})`)
+            .attr('text-anchor', "middle")
+            .attr('fill', "black")
+            .attr('font-size', `${self.config.font_size}`)
+            .attr('font-weight', "650")
+            .text(self.config.xlabel);
 
         self.inner_width = self.config.width - (self.config.margin.left + self.config.margin.right) * 2;
         self.inner_height = self.config.height - (self.config.margin.top + self.config.margin.bottom) * 2;
@@ -62,10 +65,10 @@ class ScatterPlot {
             
 
         self.xaxis = d3.axisBottom( self.xscale )
-            .ticks(10);
+            .ticks(6);
 
         self.yaxis = d3.axisLeft( self.yscale )
-            .ticks(10);
+            .ticks(6);
 
         self.xaxis_group = self.chart.append('g')
             .attr('transform', `translate(${self.config.margin.left}, ${self.inner_height + self.config.margin.top + self.config.margin.bottom})`);
@@ -91,7 +94,7 @@ class ScatterPlot {
     render() {
         let self = this;
 
-        self.inner.selectAll("circle")
+        self.circles = self.inner.selectAll("circle")
             .data(self.data)
             .enter()
             .append("circle")
@@ -106,4 +109,3 @@ class ScatterPlot {
             .call( self.yaxis );
     }
 };
-
