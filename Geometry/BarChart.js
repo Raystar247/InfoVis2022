@@ -77,18 +77,20 @@ class BarChart {
 
         const space = 10;
         const xmin = 0;
-        const xmax = d3.max(self.data, d => d.min_wage) + space;
+        const xmax = d3.max(self.data, d => d.n_starbucks) + space;
         self.xscale.domain([xmin, xmax]);
-
         const items = self.data.map(d => d.pref);
         self.yscale.domain(items);
+        self.data.sort( self.descend_order );
         console.log("b");
         self.render();
     }
 
     render() {
         let self = this;
-        
+
+
+        console.log( self.data );
         const base_color = 'steelblue';
         console.log(  "e");
         self.rect = self.chart.selectAll("rect")
@@ -97,7 +99,7 @@ class BarChart {
             .append("rect")
             .attr("x", 0)
             .attr("y", d => self.yscale(d.pref))
-            .attr("width", d => self.xscale(d.min_wage) )
+            .attr("width", d => self.xscale(d.n_starbucks) )
             .attr("height", self.yscale.bandwidth() )
             .attr("fill", base_color );
         self.xaxis_group.call(self.xaxis);
@@ -114,5 +116,19 @@ class BarChart {
                 }
                 return base_color;
             } );
+    }
+
+    descend_order( a, b ) {
+        var order = 0;
+        if ( a.n_starbucks < b.n_starbucks ) { order = 1; }
+        else if ( a.n_starbucks > b.n_starbucks ) { order = -1; }
+        return order;
+    }
+    
+    descend() {
+        let self = this;
+        console.log( "aa");
+        // self.data.sort(  self.compare );
+        self.render();
     }
 }
