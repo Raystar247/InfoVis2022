@@ -15,7 +15,7 @@ var svg = d3.select("#map_japan")
          .attr("width", w)
          .attr("height", h);
 
-d3.csv("https://raystar247.github.io/InfoVis2022/FinalTask/data.csv")
+d3.csv("https://raystar247.github.io/InfoVis2022/data/data.csv")
       .then( data => {
 
          data.forEach( d => {
