@@ -21,6 +21,38 @@ class BarChart {
             .attr('width', self.config.width)
             .attr('height', self.config.height);
 
+        var defs = self.svg.append('defs')
+        var grad = defs.append('linearGradient')
+            .attr( 'id', "grad");
+        grad.append('stop')
+            .attr('offset', "0%")
+            .attr('stop-color', "lightcyan");
+        grad.append('stop')
+            .attr('offset', "40%")
+            .attr('stop-color', "lightskyblue");   
+        grad.append('stop')
+            .attr('offset', "100%")
+            .attr('stop-color', "royalblue");   
+        
+        var grad_red = defs.append('linearGradient')
+            .attr('id', 'grad_red');
+        grad_red.append('stop')
+            .attr('offset', "0%")
+            .attr('stop-color', "gold");  
+        grad_red.append('stop')
+            .attr('offset', "100%")
+            .attr('stop-color', "red");  
+
+        var grad_orange = defs.append('linearGradient')
+            .attr('id', 'grad_orange');
+        grad_orange.append('stop')
+            .attr('offset', "0%")
+            .attr('stop-color', "yellow");  
+        grad_orange.append('stop')
+            .attr('offset', "100%")
+            .attr('stop-color', "darkorange");  
+
+
         self.chart = self.svg.append('g')
             .attr('transform', `translate(${self.config.margin.left}, ${self.config.margin.top})`);
 
@@ -58,7 +90,7 @@ class BarChart {
 
         const xlabel_space = 40;
         self.svg.append('text')
-            .attr('x', self.config.width / 2)
+            .attr('x', self.config.width / 2.75 )
             .attr('y', self.inner_height + self.config.margin.top + xlabel_space)
             .text( self.config.xlabel );
 
@@ -77,11 +109,11 @@ class BarChart {
 
         const space = 10;
         const xmin = 0;
-        const xmax = d3.max(self.data, d => d.n_starbucks) + space;
+        const xmax = d3.max(self.data, d => d.income) + space;
         self.xscale.domain([xmin, xmax]);
+        self.data.sort( self.descend_order );
         const items = self.data.map(d => d.pref);
         self.yscale.domain(items);
-        self.data.sort( self.descend_order );
         console.log("b");
         self.render();
     }
@@ -99,9 +131,9 @@ class BarChart {
             .append("rect")
             .attr("x", 0)
             .attr("y", d => self.yscale(d.pref))
-            .attr("width", d => self.xscale(d.n_starbucks) )
+            .attr("width", d => self.xscale(d.income) )
             .attr("height", self.yscale.bandwidth() )
-            .attr("fill", base_color );
+            .attr("fill", "url(#grad)" );
         self.xaxis_group.call(self.xaxis);
         self.yaxis_group.call(self.yaxis);
     }
@@ -112,22 +144,24 @@ class BarChart {
         self.rect.attr("fill", d => { 
                 console.log( "d.pref" );
                 if ( d.pref == self.highlighter ) {
-                    return "red";
+                    return "url(#grad_red)";
+                } else if (d.country == c ) {
+                    return "url(#grad_orange)";
                 }
-                return base_color;
+                return "url(#grad)";
             } );
     }
 
     descend_order( a, b ) {
         var order = 0;
-        if ( a.n_starbucks < b.n_starbucks ) { order = 1; }
-        else if ( a.n_starbucks > b.n_starbucks ) { order = -1; }
+        if ( a.income < b.income ) { order = 1; }
+        else if ( a.income > b.income ) { order = -1; }
         return order;
     }
     
     descend() {
         let self = this;
-        console.log( "aa");
+        console.log( "aa" );
         // self.data.sort(  self.compare );
         self.render();
     }
