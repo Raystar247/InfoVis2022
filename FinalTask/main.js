@@ -60,7 +60,7 @@ d3.csv("https://raystar247.github.io/InfoVis2022/data/data.csv")
             .range( ["white", "blue"] )
             .interpolate( d3.interpolateLab );
 
-         d3.json("https://raystar247.github.io/InfoVis2022/Geometry/japan.geojson").then(function(json) {
+         d3.json("https://raystar247.github.io/InfoVis2022/FinalTask/japan.geojson").then(function(json) {
             // console.log( json.features.properties );   
             const title_space = 20;
             svg.append('text')
