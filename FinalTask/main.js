@@ -69,7 +69,7 @@ d3.csv("https://raystar247.github.io/InfoVis2022/data/data.csv")
                 .attr('text-anchor', 'middle')
                 .attr('x', w / 2)
                 .attr('y', 30)
-                .text( "日本におけるSTARBUCKの店舗分布" );
+                .text( "日本におけるSTARBUCKSの店舗分布" );
             svg.append('text')
                .style('font-size', '10px')
                .attr('x', 0)
